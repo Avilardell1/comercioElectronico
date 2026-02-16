@@ -1,6 +1,7 @@
 package com.comercio.electronico.domain.service.impl;
 
-import com.comercio.electronico.adapter.db.entity.Price;
+import com.comercio.electronico.adapter.db.entity.PriceEntity;
+import com.comercio.electronico.adapter.db.mapper.PriceDbMapper;
 import com.comercio.electronico.adapter.db.repository.PriceRepository;
 import com.comercio.electronico.adapter.dto.PriceDTO;
 import com.comercio.electronico.adapter.mapper.PriceMapper;
@@ -18,14 +19,15 @@ public class PortServiceImpl implements PriceService {
 
     private final PriceRepository priceRepository;
     private final PriceMapper priceMapper;
+    private final PriceDbMapper priceDbMapper;
 
     @Override
     public List<PriceDTO> getPrices(LocalDateTime applicationDate, Long productId, Long brandId) {
-        Optional<List<Price>> priceListOptional = priceRepository.findByBrandIdAndProductIdAndApplicationDate(brandId, productId, applicationDate);
-        List<Price> priceList = priceListOptional.orElse(null);
+        Optional<List<PriceEntity>> priceListOptional = priceRepository.findAccuratePrices(brandId, productId, applicationDate);
+        List<PriceEntity> priceList = priceListOptional.orElse(null);
         if (priceList == null) {
             return Collections.emptyList();
         }
-        return priceMapper.toDto(priceList);
+        return priceMapper.toDto(priceDbMapper.toDomainList(priceList));
     }
 }

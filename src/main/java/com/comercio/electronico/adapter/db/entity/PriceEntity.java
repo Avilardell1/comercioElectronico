@@ -10,14 +10,14 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "PRICES")
 public class
-Price {
+PriceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "BRAND_ID")
-    private Brand brand;
+    private BrandEntity brand;
 
     @Column(name = "START_DATE")
     private LocalDateTime startDate;
@@ -30,7 +30,7 @@ Price {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "PRODUCT_ID")
-    private Product product;
+    private ProductEntity product;
 
     @Column(name = "PRIORITY")
     private Integer priority;
