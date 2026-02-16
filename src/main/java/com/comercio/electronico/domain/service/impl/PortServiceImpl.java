@@ -9,8 +9,6 @@ import com.comercio.electronico.domain.service.port.PriceService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,12 +20,12 @@ public class PortServiceImpl implements PriceService {
     private final PriceDbMapper priceDbMapper;
 
     @Override
-    public List<PriceDTO> getPrices(LocalDateTime applicationDate, Long productId, Long brandId) {
-        Optional<List<PriceEntity>> priceListOptional = priceRepository.findAccuratePrices(brandId, productId, applicationDate);
-        List<PriceEntity> priceList = priceListOptional.orElse(null);
+    public PriceDTO getPrices(LocalDateTime applicationDate, Long productId, Long brandId) {
+        Optional<PriceEntity> priceOptional = priceRepository.findAccuratePrices(brandId, productId, applicationDate);
+        PriceEntity priceList = priceOptional.orElse(null);
         if (priceList == null) {
-            return Collections.emptyList();
+            return null;
         }
-        return priceMapper.toDto(priceDbMapper.toDomainList(priceList));
+        return priceMapper.toDto(priceDbMapper.toDomain(priceList));
     }
 }

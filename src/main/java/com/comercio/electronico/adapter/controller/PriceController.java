@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -19,7 +18,7 @@ class PriceController {
     private final PriceService priceService;
 
     @GetMapping()
-    public ResponseEntity<List<PriceDTO>> getPrices(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime applicationDate,
+    public ResponseEntity<PriceDTO> getPrice(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime applicationDate,
                                                     @RequestParam Long productId, @RequestParam Long brandId){
 
         return ResponseEntity.ok(priceService.getPrices(applicationDate, productId, brandId));

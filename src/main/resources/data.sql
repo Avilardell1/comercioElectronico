@@ -4,10 +4,7 @@ VALUES
 
 INSERT INTO product (id, name)
 VALUES
-    (35455,'product1'),
-    (2,'product2'),
-    (3,'product3'),
-    (4,'product4');
+    (35455,'product1');
 
 INSERT INTO prices (
     brand_id,
